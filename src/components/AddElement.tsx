@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Col, Form, Input, Row, Select } from "antd";
 import { elements, widths } from "../utils/elements";
-import { FormValue } from "../utils/types";
+import { ElementType, FormValue } from "../utils/types";
+import ExtraData from "./ExtraData";
 
 function AddElement({
 	setCurrentForm,
@@ -9,6 +10,7 @@ function AddElement({
 	setCurrentForm: React.Dispatch<React.SetStateAction<FormValue[]>>;
 }) {
 	const [form] = Form.useForm();
+	const [currentElementType, setCurrentElementType] = useState<ElementType | null>(null);
 
 	const handleFinish = (values: FormValue) => {
 		console.log(values);
@@ -22,7 +24,7 @@ function AddElement({
 				<Row className="even-spaced">
 					<Col span={6}>
 						<Form.Item
-							name="typeOfElement"
+							name="elementType"
 							rules={[
 								{
 									required: true,
@@ -30,7 +32,13 @@ function AddElement({
 								},
 							]}
 						>
-							<Select placeholder="Input type" options={elements} />
+							<Select
+								onChange={(value: ElementType) => {
+									setCurrentElementType(value);
+								}}
+								placeholder="Input type"
+								options={elements}
+							/>
 						</Form.Item>
 					</Col>
 					<Col span={6}>
@@ -60,6 +68,7 @@ function AddElement({
 						</Form.Item>
 					</Col>
 				</Row>
+				<ExtraData elementType={currentElementType} />
 				<Row className="even-spaced">
 					<Col span={6}>
 						<Form.Item>

@@ -19,7 +19,7 @@ function ElementPreview({ element }: { element: FormValue }) {
 	return (
 		<div>
 			<Col span={widthMap[element.width]}>
-				{elementMap[element.typeOfElement](element.name)}
+				{elementMap[element.elementType](element.name)}
 			</Col>
 		</div>
 	);

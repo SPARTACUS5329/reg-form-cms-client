@@ -1,18 +1,18 @@
-enum TypeOfElement {
+export enum ElementType {
 	TEXT = "TEXT",
 	RADIO = "RADIO",
 	CHECKBOX = "CHECKBOX",
 	DROPDOWN = "DROPDOWN",
 }
 
-enum Width {
+export enum Width {
 	HALF = "HALF",
 	FULL = "FULL",
 	THIRD = "THIRD",
 }
 
 export interface FormValue {
-	typeOfElement: TypeOfElement;
+	elementType: ElementType;
 	name: string;
 	width: Width;
 }
