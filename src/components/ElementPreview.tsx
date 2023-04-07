@@ -17,7 +17,7 @@ const widthMap = {
 
 function ElementPreview({ element }: { element: FormValue }) {
 	return (
-		<div>
+		<div style={{ marginBottom: "10px" }}>
 			<Col span={widthMap[element.width]}>
 				{elementMap[element.elementType](element.name)}
 			</Col>

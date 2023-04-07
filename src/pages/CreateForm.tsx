@@ -21,6 +21,7 @@ function CreateForm() {
 				elements: currentForm,
 			});
 			console.log(result);
+			setFormName("");
 		} catch (error) {
 			console.error(error);
 		}
@@ -30,6 +31,7 @@ function CreateForm() {
 		<FormContext.Provider value={currentForm}>
 			<Input
 				placeholder="Form Name"
+				value={formName}
 				onChange={(e: any) => {
 					e.preventDefault();
 					setFormName(e.target.value);
