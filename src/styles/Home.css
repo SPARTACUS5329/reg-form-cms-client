@@ -1,0 +1,10 @@
+.nav-button {
+    border: 1px solid white;
+    padding: 10px;
+    color: white;
+}
+
+.nav-button:hover {
+    border: 1px solid #7979e2;
+    color: #7979e2;
+}
