@@ -20,6 +20,10 @@ export const elements: DisplayElement[] = [
 		label: "Dropdown",
 		value: "DROPDOWN",
 	},
+	{
+		label: "Next Row",
+		value: "ROW_CHANGE",
+	},
 ];
 
 export const widths: DisplayElement[] = [

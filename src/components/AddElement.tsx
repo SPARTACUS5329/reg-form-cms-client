@@ -7,14 +7,19 @@ import ExtraData from "./ExtraData";
 function AddElement({
 	setCurrentForm,
 }: {
-	setCurrentForm: React.Dispatch<React.SetStateAction<FormValue[]>>;
+	setCurrentForm: React.Dispatch<React.SetStateAction<FormValue[][]>>;
 }) {
 	const [form] = Form.useForm();
 	const [currentElementType, setCurrentElementType] = useState<ElementType | null>(null);
 
 	const handleFinish = (values: FormValue) => {
 		console.log(values);
-		setCurrentForm((curr) => [...curr, values]);
+		setCurrentForm((curr: FormValue[][]) => {
+			if (values.elementType === ElementType["ROW_CHANGE"]) return [...curr, []];
+			if (curr.length === 0) return [[values]];
+			const latestRow = curr[curr.length - 1];
+			return [...curr.slice(0, curr.length - 1), [...latestRow, values]];
+		});
 		form.resetFields();
 	};
 

@@ -8,7 +8,7 @@ import axios from "../config/_axios";
 
 function CreateForm() {
 	const [formName, setFormName] = useState<string>("");
-	const [currentForm, setCurrentForm] = useState<FormValue[]>([]);
+	const [currentForm, setCurrentForm] = useState<FormValue[][]>([]);
 
 	const handleSubmit = async () => {
 		try {

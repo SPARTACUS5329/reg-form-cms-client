@@ -3,6 +3,7 @@ export enum ElementType {
 	RADIO = "RADIO",
 	CHECKBOX = "CHECKBOX",
 	DROPDOWN = "DROPDOWN",
+	ROW_CHANGE = "ROW_CHANGE",
 }
 
 export enum Width {
@@ -15,4 +16,5 @@ export interface FormValue {
 	elementType: ElementType;
 	name: string;
 	width: Width;
+	extraData: any;
 }
