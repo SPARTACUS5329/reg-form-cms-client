@@ -29,7 +29,10 @@ function ExtraData({ elementType }: { elementType: ElementType | null }) {
 														},
 													]}
 												>
-													<Input placeholder="Option" />
+													<Input
+														className="form-input-1"
+														placeholder="Option"
+													/>
 												</Form.Item>
 											</Col>
 											<Col span={8}>
@@ -51,6 +54,7 @@ function ExtraData({ elementType }: { elementType: ElementType | null }) {
 											onClick={() => {
 												add();
 											}}
+											style={{ width: "40vw" }}
 											block
 										>
 											Add option

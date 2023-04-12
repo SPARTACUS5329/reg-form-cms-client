@@ -13,7 +13,6 @@ function AddElement({
 	const [currentElementType, setCurrentElementType] = useState<ElementType | null>(null);
 
 	const handleFinish = (values: FormValue) => {
-		console.log(values);
 		setCurrentForm((curr: FormValue[][]) => {
 			if (values.elementType === ElementType["ROW_CHANGE"]) return [...curr, []];
 			if (curr.length === 0) return [[values]];
@@ -41,6 +40,7 @@ function AddElement({
 								onChange={(value: ElementType) => {
 									setCurrentElementType(value);
 								}}
+								className="form-input-2"
 								placeholder="Input type"
 								options={elements}
 							/>
@@ -56,7 +56,7 @@ function AddElement({
 								},
 							]}
 						>
-							<Input placeholder="Name" />
+							<Input className="form-input-1" placeholder="Name" />
 						</Form.Item>
 					</Col>
 					<Col span={6}>
@@ -69,7 +69,7 @@ function AddElement({
 								},
 							]}
 						>
-							<Select placeholder="Width" options={widths} />
+							<Select className="form-input-2" placeholder="Width" options={widths} />
 						</Form.Item>
 					</Col>
 				</Row>

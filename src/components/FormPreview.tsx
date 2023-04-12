@@ -8,15 +8,13 @@ function FormPreview() {
 
 	return (
 		<div>
-			<div>
-				{currentForm.map((elements, index) => {
-					return (
-						<Row key={index} className="even-spaced" style={{ marginTop: "10px" }}>
-							<ElementsPreview elements={elements} />
-						</Row>
-					);
-				})}
-			</div>
+			{currentForm.map((elements, index) => {
+				return (
+					<Row key={index} className="even-spaced" style={{ marginTop: "20px" }}>
+						<ElementsPreview elements={elements} />
+					</Row>
+				);
+			})}
 		</div>
 	);
 }

@@ -30,13 +30,14 @@ function CreateForm() {
 	return (
 		<FormContext.Provider value={currentForm}>
 			<Input
+				className="form-input-1"
 				placeholder="Form Name"
 				value={formName}
 				onChange={(e: any) => {
 					e.preventDefault();
 					setFormName(e.target.value);
 				}}
-				style={{ marginBottom: "20px" }}
+				style={{ marginBottom: "20px", width: "40vw" }}
 			/>
 			<AddElement setCurrentForm={setCurrentForm} />
 			<FormPreview />

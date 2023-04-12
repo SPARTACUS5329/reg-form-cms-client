@@ -55,7 +55,7 @@ const widthMap = {
 	"THIRD": 6,
 };
 
-function ElementsPreview({ elements }: { elements: FormValue[] }) {
+function DisplayElements({ elements }: { elements: FormValue[] }) {
 	return (
 		<>
 			{elements.length === 0 && (
@@ -70,4 +70,4 @@ function ElementsPreview({ elements }: { elements: FormValue[] }) {
 	);
 }
 
-export default ElementsPreview;
+export default DisplayElements;

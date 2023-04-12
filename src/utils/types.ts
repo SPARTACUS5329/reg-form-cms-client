@@ -18,3 +18,8 @@ export interface FormValue {
 	width: Width;
 	extraData: any;
 }
+
+export interface Form {
+	name: string;
+	elements: FormValue[][];
+}

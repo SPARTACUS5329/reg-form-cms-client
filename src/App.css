@@ -10,6 +10,12 @@
   justify-content: center;
 }
 
+.vertical-center {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .between-spaced {
   display: flex;
   justify-content: space-between;
@@ -18,4 +24,13 @@
 .even-spaced {
   display: flex;
   justify-content: space-evenly;
+}
+
+.form-input-1 {
+  border: 3px solid #7979e2;
+}
+
+.form-input-2 {
+  border: 3px solid #e44552;
+  border-radius: 10px;
 }
