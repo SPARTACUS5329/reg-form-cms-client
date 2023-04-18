@@ -14,12 +14,15 @@ function AddElement({
 
 	const handleFinish = (values: FormValue) => {
 		setCurrentForm((curr: FormValue[][]) => {
-			if (values.elementType === ElementType["ROW_CHANGE"]) return [...curr, []];
 			if (curr.length === 0) return [[values]];
 			const latestRow = curr[curr.length - 1];
 			return [...curr.slice(0, curr.length - 1), [...latestRow, values]];
 		});
 		form.resetFields();
+	};
+
+	const handleNewRow = () => {
+		setCurrentForm((curr: FormValue[][]) => [...curr, []]);
 	};
 
 	return (
@@ -74,13 +77,18 @@ function AddElement({
 					</Col>
 				</Row>
 				<ExtraData elementType={currentElementType} />
-				<Row className="even-spaced">
+				<Row className="centered">
 					<Col span={6}>
 						<Form.Item>
 							<Button type="primary" htmlType="submit">
 								Add
 							</Button>
 						</Form.Item>
+					</Col>
+					<Col span={6}>
+						<Button type="dashed" onClick={handleNewRow}>
+							New Row
+						</Button>
 					</Col>
 				</Row>
 			</Form>

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import AddElement from "../components/AddElement";
-import { FormValue } from "../utils/types";
+import { FormValue, NotificationType } from "../utils/types";
 import { FormContext } from "../utils/FormContext";
 import FormPreview from "../components/FormPreview";
 import { Button, Input } from "antd";
 import axios from "../config/_axios";
+import openNotification from "../utils/openNotification";
 
 function CreateForm() {
 	const [formName, setFormName] = useState<string>("");
@@ -15,13 +16,15 @@ function CreateForm() {
 			if (formName === "") {
 				throw Error("Invalid form name");
 			}
-			console.log(currentForm);
 			const result = await axios.post("/create-form", {
 				name: formName,
 				elements: currentForm,
 			});
-			console.log(result);
-			setFormName("");
+			if (result.data === "SUCCESS") {
+				setFormName("");
+				return openNotification(NotificationType["SUCCESS"], "Form created successfully");
+			}
+			return openNotification(NotificationType["ERROR"], "An error occurred");
 		} catch (error) {
 			console.error(error);
 		}

@@ -23,3 +23,9 @@ export interface Form {
 	name: string;
 	elements: FormValue[][];
 }
+
+export enum NotificationType {
+	ERROR = "error",
+	WARNING = "warning",
+	SUCCESS = "success",
+}
