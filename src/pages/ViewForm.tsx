@@ -9,7 +9,7 @@ import openNotification from "../utils/openNotification";
 const { Text } = Typography;
 
 function ViewForm() {
-	const [match, params] = useRoute("/view-form/:name");
+	const [match, params] = useRoute("/register/:name");
 	if (!match || !params?.name) return <div>Sorry this form does not exist</div>;
 	const [uiForm, setUIForm] = useState<Form>();
 	const [regDetails] = AntForm.useForm();

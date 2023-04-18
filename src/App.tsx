@@ -12,7 +12,7 @@ function App() {
 				<Switch>
 					<Route path="/" component={Home} />
 					<Route path="/create-form" component={CreateForm} />
-					<Route path="/view-form/:name" component={ViewForm} />
+					<Route path="/register/:name" component={ViewForm} />
 				</Switch>
 			</Router>
 		</div>

@@ -28,14 +28,14 @@ function Home() {
 					</Link>
 				</div>
 				<div>
-					<Link to="/view-form" className="nav-button">
+					<Link to="/register" className="nav-button">
 						View Forms
 					</Link>
 				</div>
 			</div>
 			<div>
 				{forms.map((form, index) => (
-					<Link href={`/view-form/${form.name}`} key={index}>
+					<Link href={`/register/${form.name}`} key={index}>
 						{form.name}
 					</Link>
 				))}
