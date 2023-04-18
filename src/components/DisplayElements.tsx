@@ -52,7 +52,20 @@ const elementMap = {
 			style={{ width: "100%" }}
 		/>
 	),
-	"ROW_CHANGE": () => <div />,
+	"MULTI_SELECT": (name: string, extraData: any) => (
+		<Select
+			placeholder={name}
+			mode="multiple"
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			options={extraData.map(({ option }: any) => {
+				return {
+					label: option,
+					value: option,
+				};
+			})}
+			style={{ width: "100%" }}
+		/>
+	),
 };
 
 function DisplayElements({ elements }: { elements: FormValue[] }) {

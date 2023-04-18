@@ -76,12 +76,16 @@ function AddElement({
 						</Form.Item>
 					</Col>
 				</Row>
-				<ExtraData elementType={currentElementType} />
+				<Row className="centered">
+					<Col span={24}>
+						<ExtraData elementType={currentElementType} />
+					</Col>
+				</Row>
 				<Row className="centered">
 					<Col span={6}>
 						<Form.Item>
 							<Button type="primary" htmlType="submit">
-								Add
+								Add Field
 							</Button>
 						</Form.Item>
 					</Col>

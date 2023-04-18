@@ -20,6 +20,10 @@ export const elements: DisplayElement[] = [
 		label: "Dropdown",
 		value: "DROPDOWN",
 	},
+	{
+		label: "Multi Select",
+		value: "MULTI_SELECT",
+	},
 ];
 
 export const widths: DisplayElement[] = [

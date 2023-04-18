@@ -1,24 +1,26 @@
 import React, { useState } from "react";
 import { ElementType } from "../utils/types";
 import { Button, Col, Form, Input, Row } from "antd";
+import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
+
+const optionBasedFields = [
+	ElementType["RADIO"],
+	ElementType["DROPDOWN"],
+	ElementType["MULTI_SELECT"],
+];
 
 function ExtraData({ elementType }: { elementType: ElementType | null }) {
 	return (
-		<div>
-			{(elementType === ElementType["RADIO"] || elementType === ElementType["DROPDOWN"]) && (
+		<>
+			{elementType && optionBasedFields.includes(elementType) && (
 				<Form.Item>
 					<Form.List name="extraData">
 						{(fields, { add, remove }) => {
 							return (
-								<Col>
+								<>
 									{fields.map((field) => (
-										<Row gutter={12} key={field.key}>
-											<Col
-												lg={{ span: 10 }}
-												md={{ span: 10 }}
-												sm={{ span: 10 }}
-												xs={{ span: 10 }}
-											>
+										<Row className="centered" gutter={12} key={field.key}>
+											<Col span={10}>
 												<Form.Item
 													{...field}
 													name={[field.name, "option"]}
@@ -35,38 +37,49 @@ function ExtraData({ elementType }: { elementType: ElementType | null }) {
 													/>
 												</Form.Item>
 											</Col>
-											<Col span={8}>
+											<Col span={2}>
 												<Button
-													style={{ width: "100%" }}
+													style={{ width: "100%", background: "#e44552" }}
 													onClick={() => {
 														remove(field.name);
 													}}
 												>
-													Remove option
+													<MinusCircleOutlined
+														style={{ fontSize: "25px", color: "white" }}
+													/>
 												</Button>
 											</Col>
 										</Row>
 									))}
 
-									<Form.Item>
-										<Button
-											type="dashed"
-											onClick={() => {
-												add();
-											}}
-											style={{ width: "40vw" }}
-											block
-										>
-											Add option
-										</Button>
-									</Form.Item>
-								</Col>
+									<Row className="centered">
+										<Col span={2}>
+											<Form.Item>
+												<Button
+													type="primary"
+													onClick={() => {
+														add();
+													}}
+													block
+													style={{ background: "#32a852" }}
+												>
+													<PlusCircleOutlined
+														style={{
+															fontSize: "25px",
+															color: "white",
+														}}
+													/>
+												</Button>
+											</Form.Item>
+										</Col>
+									</Row>
+								</>
 							);
 						}}
 					</Form.List>
 				</Form.Item>
 			)}
-		</div>
+		</>
 	);
 }
 
