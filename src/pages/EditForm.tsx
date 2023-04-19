@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "../config/_axios";
 import { useRoute } from "wouter";
-import { Row, Typography } from "antd";
-import { Form, FormValue } from "../utils/types";
+import { Button, Col, Row, Typography } from "antd";
+import { Form, FormValue, NotificationType } from "../utils/types";
 import ElementsPreview from "../components/ElementPreview";
 import { FormContext } from "../utils/FormContext";
 import EditWindow from "../components/EditWindow";
+import openNotification from "../utils/openNotification";
 
 const { Text } = Typography;
 
@@ -27,6 +28,19 @@ function EditForm() {
 		};
 		getForm();
 	}, []);
+
+	const handleUpdate = async () => {
+		try {
+			const result = await axios.patch(`/update-form/${currentForm?.name}`, {
+				newForm: currentForm,
+			});
+			if (result.data === "SUCCESS")
+				return openNotification(NotificationType["SUCCESS"], "Updated successfully");
+		} catch (error) {
+			console.error(error);
+			return openNotification(NotificationType["ERROR"], "An error occurred");
+		}
+	};
 
 	return (
 		<div style={{ display: "flex" }}>
@@ -51,9 +65,23 @@ function EditForm() {
 							))}
 						</>
 					)}
+					<Row className="centered" style={{ marginTop: "20px" }}>
+						<Col>
+							<Button type="primary" onClick={handleUpdate}>
+								Update Form
+							</Button>
+						</Col>
+					</Row>
 				</div>
 				{currentElement && (
-					<div style={{ width: "30%", border: "1px solid white", height: "90vh" }}>
+					<div
+						style={{
+							width: "30%",
+							border: "1px solid white",
+							height: "90vh",
+							borderRadius: "5px",
+						}}
+					>
 						<EditWindow
 							currentElement={currentElement}
 							setCurrentForm={setCurrentForm}
