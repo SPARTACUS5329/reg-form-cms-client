@@ -22,10 +22,17 @@ export interface FormValue {
 export interface Form {
 	name: string;
 	elements: FormValue[][];
+	createdAt: string;
 }
 
 export enum NotificationType {
 	ERROR = "error",
 	WARNING = "warning",
 	SUCCESS = "success",
+}
+
+export interface Registration {
+	createdAt: Date;
+	details: { [key: string]: any };
+	eventName: string;
 }

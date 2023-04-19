@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Form } from "../utils/types";
 import axios from "../config/_axios";
 import "../styles/Home.css";
+import FormCard from "../components/FormCard";
 
 function Home() {
 	const [forms, setForms] = useState<Form[]>([]);
@@ -27,18 +28,20 @@ function Home() {
 						New Form
 					</Link>
 				</div>
-				<div>
-					<Link to="/register" className="nav-button">
-						View Forms
-					</Link>
-				</div>
 			</div>
-			<div>
-				{forms.map((form, index) => (
-					<Link href={`/register/${form.name}`} key={index}>
-						{form.name}
-					</Link>
-				))}
+			<div className="centered">
+				<div
+					style={{
+						display: "grid",
+						gridTemplateColumns: "auto auto auto",
+						rowGap: "2rem",
+						columnGap: "2rem",
+					}}
+				>
+					{forms.map((form, index) => (
+						<FormCard key={index} form={form} />
+					))}
+				</div>
 			</div>
 		</div>
 	);

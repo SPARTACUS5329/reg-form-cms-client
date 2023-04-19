@@ -49,13 +49,11 @@ function ViewForm() {
 				{uiForm?.name}
 			</Text>
 			<AntForm form={regDetails} name="register" onFinish={handleFinish}>
-				{uiForm?.elements.map((elements, index) => {
-					return (
-						<Row key={index} className="even-spaced" style={{ marginTop: "20px" }}>
-							<DisplayElements elements={elements} />
-						</Row>
-					);
-				})}
+				{uiForm?.elements.map((elements, index) => (
+					<Row key={index} className="even-spaced" style={{ marginTop: "20px" }}>
+						<DisplayElements elements={elements} />
+					</Row>
+				))}
 				{uiForm && (
 					<Row className="centered">
 						<Col>
