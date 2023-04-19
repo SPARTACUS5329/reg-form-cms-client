@@ -1,13 +1,23 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { FormValue } from "../utils/types";
 import { Col, Input, Select, Radio, Typography, Checkbox } from "antd";
 const { Text } = Typography;
 
 const elementMap = {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-	"TEXT": (name: string, extraData: any) => <Input className="form-input-1" placeholder={name} />,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	"RADIO": (name: string, extraData: any) => (
+	"TEXT": (
+		element: FormValue,
+		setCurrentElement: Dispatch<SetStateAction<FormValue | undefined>>
+	) => (
+		<Input
+			className="form-input-1"
+			placeholder={element.name}
+			onFocus={() => setCurrentElement(element)}
+		/>
+	),
+	"RADIO": (
+		element: FormValue,
+		setCurrentElement: Dispatch<SetStateAction<FormValue | undefined>>
+	) => (
 		<div
 			style={{
 				width: "100%",
@@ -16,11 +26,11 @@ const elementMap = {
 				marginLeft: "10px",
 				flexDirection: "column",
 			}}
+			onFocus={() => setCurrentElement(element)}
 		>
-			<Text style={{ color: "white", fontWeight: "bold" }}>{name}</Text>
+			<Text style={{ color: "white", fontWeight: "bold" }}>{element.name}</Text>
 			<Radio.Group>
-				{/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-				{extraData.map(({ option }: any, index: number) => (
+				{element.extraData.map(({ option }: { option: string }, index: number) => (
 					<Radio key={index} style={{ color: "white" }} checked={false} value={option}>
 						{option}
 					</Radio>
@@ -28,35 +38,44 @@ const elementMap = {
 			</Radio.Group>
 		</div>
 	),
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-	"CHECKBOX": (name: string, extraData: any) => (
-		<Checkbox style={{ color: "white" }}>{name}</Checkbox>
+	"CHECKBOX": (
+		element: FormValue,
+		setCurrentElement: Dispatch<SetStateAction<FormValue | undefined>>
+	) => (
+		<div onFocus={() => setCurrentElement(element)}>
+			<Checkbox style={{ color: "white" }}>{element.name}</Checkbox>
+		</div>
 	),
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-	"DROPDOWN": (name: string, extraData: any) => (
+	"DROPDOWN": (
+		element: FormValue,
+		setCurrentElement: Dispatch<SetStateAction<FormValue | undefined>>
+	) => (
 		<Select
-			placeholder={name}
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			options={extraData.map(({ option }: any) => {
+			placeholder={element.name}
+			options={element.extraData.map(({ option }: { option: string }) => {
 				return {
 					label: option,
 					value: option,
 				};
 			})}
+			onFocus={() => setCurrentElement(element)}
 			style={{ width: "100%" }}
 		/>
 	),
-	"MULTI_SELECT": (name: string, extraData: any) => (
+	"MULTI_SELECT": (
+		element: FormValue,
+		setCurrentElement: Dispatch<SetStateAction<FormValue | undefined>>
+	) => (
 		<Select
-			placeholder={name}
+			placeholder={element.name}
 			mode="multiple"
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			options={extraData.map(({ option }: any) => {
+			options={element.extraData.map(({ option }: { option: string }) => {
 				return {
 					label: option,
 					value: option,
 				};
 			})}
+			onFocus={() => setCurrentElement(element)}
 			style={{ width: "100%" }}
 		/>
 	),
@@ -68,7 +87,13 @@ const widthMap = {
 	"THIRD": 6,
 };
 
-function ElementsPreview({ elements }: { elements: FormValue[] }) {
+function ElementsPreview({
+	elements,
+	setCurrentElement,
+}: {
+	elements: FormValue[];
+	setCurrentElement: Dispatch<SetStateAction<FormValue | undefined>>;
+}) {
 	return (
 		<>
 			{elements.length === 0 && (
@@ -76,7 +101,7 @@ function ElementsPreview({ elements }: { elements: FormValue[] }) {
 			)}
 			{elements.map((element, index) => (
 				<Col key={index} span={widthMap[element.width]}>
-					{elementMap[element.elementType](element.name, element.extraData)}
+					{elementMap[element.elementType](element, setCurrentElement)}
 				</Col>
 			))}
 		</>

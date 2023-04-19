@@ -16,7 +16,7 @@ export interface FormValue {
 	elementType: ElementType;
 	name: string;
 	width: Width;
-	extraData: any;
+	extraData?: any;
 }
 
 export interface Form {

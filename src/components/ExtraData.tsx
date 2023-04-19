@@ -37,7 +37,7 @@ function ExtraData({ elementType }: { elementType: ElementType | null }) {
 													/>
 												</Form.Item>
 											</Col>
-											<Col span={2}>
+											<Col span={6}>
 												<Button
 													style={{ width: "100%", background: "#e44552" }}
 													onClick={() => {
@@ -53,7 +53,7 @@ function ExtraData({ elementType }: { elementType: ElementType | null }) {
 									))}
 
 									<Row className="centered">
-										<Col span={2}>
+										<Col span={6}>
 											<Form.Item>
 												<Button
 													type="primary"

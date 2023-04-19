@@ -44,7 +44,7 @@ function AddElement({
 									setCurrentElementType(value);
 								}}
 								className="form-input-2"
-								placeholder="Input type"
+								placeholder="Input Type"
 								options={elements}
 							/>
 						</Form.Item>
