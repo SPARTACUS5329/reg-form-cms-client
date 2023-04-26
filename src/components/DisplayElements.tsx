@@ -1,5 +1,5 @@
 import React from "react";
-import { FormValue } from "../utils/types";
+import { FormElement } from "../utils/types";
 import { Col, Input, Select, Radio, Typography, Checkbox, Form } from "antd";
 const { Text } = Typography;
 
@@ -68,7 +68,7 @@ const elementMap = {
 	),
 };
 
-function DisplayElements({ elements }: { elements: FormValue[] }) {
+function DisplayElements({ elements }: { elements: FormElement[] }) {
 	return (
 		<>
 			{/* New row case */}

@@ -29,6 +29,7 @@ function ViewForm() {
 
 	const handleFinish = async (values: any) => {
 		try {
+			console.log(values);
 			const result = await axios.post(`/register/${uiForm?.name}`, { details: values });
 			if (result.data === "SUCCESS")
 				return openNotification(NotificationType["SUCCESS"], "Successfully registered!");
@@ -49,9 +50,9 @@ function ViewForm() {
 				{uiForm?.name}
 			</Text>
 			<AntForm form={regDetails} name="register" onFinish={handleFinish}>
-				{uiForm?.elements.map((elements, index) => (
+				{uiForm?.rows.map((row, index) => (
 					<Row key={index} className="even-spaced" style={{ marginTop: "20px" }}>
-						<DisplayElements elements={elements} />
+						<DisplayElements elements={row.elements} />
 					</Row>
 				))}
 				{uiForm && (

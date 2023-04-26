@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { ElementType } from "../utils/types";
 import { Button, Col, Form, Input, Row } from "antd";
 import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
-
-const optionBasedFields = [
-	ElementType["RADIO"],
-	ElementType["DROPDOWN"],
-	ElementType["MULTI_SELECT"],
-];
+import { optionBasedFields } from "../utils/constants";
 
 function ExtraData({ elementType }: { elementType: ElementType | null }) {
 	return (

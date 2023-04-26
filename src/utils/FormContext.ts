@@ -1,4 +1,4 @@
 import { createContext } from "react";
-import { FormValue } from "./types";
+import { FormRow } from "./types";
 
-export const FormContext = createContext<FormValue[][]>([]);
+export const FormContext = createContext<FormRow[]>([]);

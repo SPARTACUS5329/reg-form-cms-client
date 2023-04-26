@@ -1,24 +1,46 @@
 import React, { useEffect, useState } from "react";
 import AddElement from "../components/AddElement";
-import { FormValue, NotificationType } from "../utils/types";
+import { FormElement, NotificationType, FormRow } from "../utils/types";
 import { FormContext } from "../utils/FormContext";
 import FormPreview from "../components/FormPreview";
-import { Button, Input } from "antd";
+// import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider, useDrop } from "react-dnd";
+import { Button, Input, Typography } from "antd";
 import axios from "../config/_axios";
 import openNotification from "../utils/openNotification";
+import Toolbar from "../components/Toolbar";
+import { Tool as ToolType, toolMap } from "../utils/constants";
+import Tool from "../components/Tool";
+import { PlusCircleOutlined } from "@ant-design/icons";
+import getNextID from "../utils/getNextID";
+import Row from "../components/Row";
+import EditWindow from "../components/EditWindow";
+
+const { Text } = Typography;
 
 function CreateForm() {
 	const [formName, setFormName] = useState<string>("");
-	const [currentForm, setCurrentForm] = useState<FormValue[][]>([]);
+	const idGenerator = getNextID(0);
+	const [currentForm, setCurrentForm] = useState<FormRow[]>([
+		{
+			rowID: 0,
+			elements: [],
+		},
+	]);
+	const [currentElement, setCurrentElement] = useState<FormElement>();
+
+	const handleNewRow = () => {
+		setCurrentForm((curr) => [...curr, { rowID: idGenerator.next().value, elements: [] }]);
+	};
 
 	const handleSubmit = async () => {
 		try {
 			if (formName === "") {
-				throw Error("Invalid form name");
+				return openNotification(NotificationType["ERROR"], "Invalid form name");
 			}
 			const result = await axios.post("/create-form", {
 				name: formName,
-				elements: currentForm,
+				rows: currentForm,
 			});
 			if (result.data === "SUCCESS") {
 				setFormName("");
@@ -32,21 +54,68 @@ function CreateForm() {
 
 	return (
 		<FormContext.Provider value={currentForm}>
-			<Input
-				className="form-input-1"
-				placeholder="Form Name"
-				value={formName}
-				onChange={(e: any) => {
-					e.preventDefault();
-					setFormName(e.target.value);
-				}}
-				style={{ marginBottom: "20px", width: "40vw" }}
-			/>
-			<AddElement setCurrentForm={setCurrentForm} />
-			<FormPreview />
-			<Button onClick={handleSubmit} style={{ marginTop: "20px" }}>
-				Create Form
-			</Button>
+			<Toolbar />
+			<div className="between-spaced">
+				<div style={{ width: "70%" }}>
+					<Input
+						className="form-input-1"
+						placeholder="Form Name"
+						value={formName}
+						onChange={(e: any) => {
+							e.preventDefault();
+							setFormName(e.target.value);
+						}}
+						style={{ marginBottom: "20px", width: "40vw" }}
+					/>
+					{/* <AddElement setCurrentForm={setCurrentForm} idGenerator={idGenerator} /> */}
+					{/* <FormPreview /> */}
+					{currentForm.map((row, index: number) => (
+						<Row
+							key={index}
+							row={row}
+							setCurrentForm={setCurrentForm}
+							setCurrentElement={setCurrentElement}
+						/>
+					))}
+					<div className="vertical-center">
+						<div className="centered">
+							<Button
+								type="dashed"
+								onClick={handleNewRow}
+								style={{ marginTop: "20px" }}
+							>
+								<PlusCircleOutlined />
+							</Button>
+						</div>
+						<div className="centered">
+							<Button onClick={handleSubmit} style={{ marginTop: "20px" }}>
+								Create Form
+							</Button>
+						</div>
+					</div>
+				</div>
+				<div
+					style={{
+						width: "25%",
+						border: "1px solid white",
+						height: "90vh",
+						borderRadius: "5px",
+					}}
+				>
+					{currentElement ? (
+						<EditWindow
+							currentElement={currentElement}
+							setCurrentForm={setCurrentForm}
+							setCurrentElement={setCurrentElement}
+						/>
+					) : (
+						<>
+							<Text style={{ color: "white", fontSize: "2rem" }}>Pick a field, </Text>
+							<Text style={{ color: "white", fontSize: "1.5rem" }}>any field</Text>
+						</>
+					)}
+				</div>
+			</div>
 		</FormContext.Provider>
 	);
 }

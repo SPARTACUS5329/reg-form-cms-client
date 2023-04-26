@@ -1,6 +1,8 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { FormElement } from "../utils/types";
-import { Col, Input, Select, Radio, Typography, Checkbox } from "antd";
+import { ElementType, Width } from "./types";
+import { Input, Select, Radio, Typography, Checkbox } from "antd";
+// import { FormElement as FormElementType } from "./types";
+
 const { Text } = Typography;
 
 const elementMap = {
@@ -30,7 +32,7 @@ const elementMap = {
 		>
 			<Text style={{ color: "white", fontWeight: "bold" }}>{element.name}</Text>
 			<Radio.Group>
-				{element.extraData?.map(({ option }: { option: string }, index: number) => (
+				{element.extraData.map(({ option }: { option: string }, index: number) => (
 					<Radio key={index} style={{ color: "white" }} checked={false} value={option}>
 						{option}
 					</Radio>
@@ -81,28 +83,20 @@ const elementMap = {
 	),
 };
 
-const widthMap = {
-	"HALF": 10,
-	"FULL": 24,
-	"THIRD": 6,
-};
+class FormElement {
+	public elementType: ElementType;
+	public name: string;
+	public width: Width;
+	public extraData: any;
 
-function ElementsPreview({
-	elements,
-	setCurrentElement,
-}: {
-	elements: FormElement[];
-	setCurrentElement: Dispatch<SetStateAction<FormElement | undefined>>;
-}) {
-	return (
-		<>
-			{elements.map((element, index) => (
-				<Col key={index} span={widthMap[element.width]}>
-					{elementMap[element.elementType](element, setCurrentElement)}
-				</Col>
-			))}
-		</>
-	);
+	constructor(elementType: ElementType, name: string, width: Width, extraData: any) {
+		this.elementType = elementType;
+		this.name = name;
+		this.width = width;
+		this.extraData = extraData;
+	}
+
+	public getPreviewElement() {
+		return this.elementType;
+	}
 }
-
-export default ElementsPreview;

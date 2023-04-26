@@ -1,28 +1,38 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Input, Row, Select } from "antd";
 import { elements, widths } from "../utils/elements";
-import { ElementType, FormValue } from "../utils/types";
+import { ElementType, FormElement, FormRow } from "../utils/types";
 import ExtraData from "./ExtraData";
 
 function AddElement({
 	setCurrentForm,
+	idGenerator,
 }: {
-	setCurrentForm: React.Dispatch<React.SetStateAction<FormValue[][]>>;
+	setCurrentForm: React.Dispatch<React.SetStateAction<FormRow[]>>;
+	idGenerator: Generator<number, number, number>;
 }) {
 	const [form] = Form.useForm();
 	const [currentElementType, setCurrentElementType] = useState<ElementType | null>(null);
 
-	const handleFinish = (values: FormValue) => {
-		setCurrentForm((curr: FormValue[][]) => {
-			if (curr.length === 0) return [[values]];
+	const handleFinish = (values: FormElement) => {
+		setCurrentForm((curr) => {
+			if (curr.length === 0)
+				return [
+					{
+						rowID: idGenerator.next().value,
+						elements: [values],
+					},
+				];
 			const latestRow = curr[curr.length - 1];
-			return [...curr.slice(0, curr.length - 1), [...latestRow, values]];
+			return [
+				...curr.slice(0, curr.length - 1),
+				{
+					rowID: latestRow.rowID,
+					elements: [...latestRow.elements, values],
+				},
+			];
 		});
 		form.resetFields();
-	};
-
-	const handleNewRow = () => {
-		setCurrentForm((curr: FormValue[][]) => [...curr, []]);
 	};
 
 	return (
@@ -88,11 +98,6 @@ function AddElement({
 								Add Field
 							</Button>
 						</Form.Item>
-					</Col>
-					<Col span={6}>
-						<Button type="dashed" onClick={handleNewRow}>
-							New Row
-						</Button>
 					</Col>
 				</Row>
 			</Form>

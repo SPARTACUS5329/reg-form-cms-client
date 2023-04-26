@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from "react";
-import { ElementType, FormValue, Form } from "../utils/types";
+import { ElementType, FormElement, Form, FormRow, Width } from "../utils/types";
 import { Button, Col, Form as AntForm, Input, Row, Select, Typography } from "antd";
 import { elements, widths } from "../utils/elements";
 import ExtraData from "./ExtraData";
@@ -12,38 +12,42 @@ function EditWindow({
 	setCurrentForm,
 	setCurrentElement,
 }: {
-	currentElement: FormValue;
-	setCurrentForm: Dispatch<SetStateAction<Form | undefined>>;
-	setCurrentElement: Dispatch<SetStateAction<FormValue | undefined>>;
+	currentElement: FormElement;
+	setCurrentForm: Dispatch<SetStateAction<FormRow[]>>;
+	setCurrentElement: Dispatch<SetStateAction<FormElement | undefined>>;
 }) {
 	const [currentElementType, setCurrentElementType] = useState<ElementType>(
 		currentElement.elementType
 	);
 	const [form] = AntForm.useForm();
 
-	const handleFinish = (values: FormValue) => {
-		setCurrentForm((form) => {
-			if (!form) return form;
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			const { elements, ...rest } = form;
-			const newElements = form.elements.map((row: FormValue[]) =>
-				row.map((element: FormValue) =>
+	const handleFinish = (values: FormElement) => {
+		setCurrentForm((form) =>
+			form.map((row) => ({
+				rowID: row.rowID,
+				elements: row.elements.map((element: FormElement) =>
 					element.name === currentElement.name ? values : element
-				)
-			);
-			const newForm = {
-				elements: newElements,
-				...rest,
-			};
-			return newForm;
-		});
+				),
+			}))
+		);
 		setCurrentElement(values);
+	};
+
+	const handleDelete = () => {
+		setCurrentForm((form) =>
+			form.map((row) => ({
+				rowID: row.rowID,
+				elements: row.elements.filter(
+					(element: FormElement) => element.name !== currentElement.name
+				),
+			}))
+		);
 	};
 
 	return (
 		<>
 			<Text style={{ color: "white", fontSize: "2rem", fontWeight: "bold" }}>
-				{currentElement.name}
+				{currentElement.name || "Give a name"}
 			</Text>
 			<AntForm form={form} onFinish={handleFinish}>
 				<Row className="centered">
@@ -80,13 +84,18 @@ function EditWindow({
 						</AntForm.Item>
 					</Col>
 				</Row>
-				<Row className="centered">
+				<Row className="even-spaced">
 					<Col span={6}>
 						<AntForm.Item>
 							<Button type="primary" htmlType="submit">
 								Update
 							</Button>
 						</AntForm.Item>
+					</Col>
+					<Col span={6}>
+						<Button type="dashed" onClick={handleDelete}>
+							Delete
+						</Button>
 					</Col>
 				</Row>
 			</AntForm>

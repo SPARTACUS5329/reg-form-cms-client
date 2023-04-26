@@ -12,16 +12,18 @@ export enum Width {
 	THIRD = "THIRD",
 }
 
-export interface FormValue {
+export interface FormElement {
 	elementType: ElementType;
 	name: string;
 	width: Width;
-	extraData?: any;
+	extraData?: {
+		option: string;
+	}[];
 }
 
 export interface Form {
 	name: string;
-	elements: FormValue[][];
+	rows: FormRow[];
 	createdAt: string;
 }
 
@@ -35,4 +37,9 @@ export interface Registration {
 	createdAt: Date;
 	details: { [key: string]: any };
 	eventName: string;
+}
+
+export interface FormRow {
+	rowID: number;
+	elements: FormElement[];
 }
