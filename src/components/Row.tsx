@@ -2,7 +2,8 @@ import React, { Dispatch, SetStateAction } from "react";
 import { useDrop } from "react-dnd";
 import { Row as AntRow } from "antd";
 import ElementsPreview from "./ElementPreview";
-import { FormElement, FormRow } from "../utils/types";
+import { FormElementParameters, FormRow } from "../utils/types";
+import FormElement from "../utils/FormElement";
 
 function Row({
 	row,
@@ -18,19 +19,20 @@ function Row({
 	// eslint-disable-next-line
 	const [{ isOver }, drop] = useDrop(() => ({
 		accept: "image",
-		drop: (item: FormElement) => addTool(item),
+		drop: (item: FormElementParameters) => addTool(item),
 		collect: (monitor) => ({
 			isOver: !!monitor.isOver(),
 		}),
 	}));
 
-	const addTool = (item: FormElement) => {
+	const addTool = (item: FormElementParameters) => {
+		const newItem = new FormElement(item.elementType, item.name, item.width, item.extraData);
 		setCurrentForm((currentForm) =>
 			currentForm.map((curr) =>
 				curr.rowID === row.rowID
 					? {
 							rowID: curr.rowID,
-							elements: [...curr.elements, item],
+							elements: [...curr.elements, newItem],
 							// eslint-disable-next-line no-mixed-spaces-and-tabs
 					  }
 					: curr

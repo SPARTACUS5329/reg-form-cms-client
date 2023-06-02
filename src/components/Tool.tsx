@@ -1,6 +1,7 @@
 import React from "react";
 import { useDrag } from "react-dnd";
 import { Tool as ToolType, optionBasedFields } from "../utils/constants";
+import FormElement from "../utils/FormElement";
 import { Width } from "../utils/types";
 
 function Tool({ tool }: { tool: ToolType }) {
