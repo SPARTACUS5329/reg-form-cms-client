@@ -1,7 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { ElementType, Width } from "./types";
 import { Input, Select, Radio, Typography, Checkbox } from "antd";
-// import { FormElement as FormElementType } from "./types";
 
 const { Text } = Typography;
 
@@ -87,8 +86,10 @@ class FormElement {
 	public elementType: ElementType;
 	public name: string;
 	public width: Width;
-	public extraData: any;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public extraData: any[];
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	constructor(elementType: ElementType, name: string, width: Width, extraData: any) {
 		this.elementType = elementType;
 		this.name = name;
@@ -96,7 +97,28 @@ class FormElement {
 		this.extraData = extraData;
 	}
 
-	public getPreviewElement() {
-		return this.elementType;
+	public getPreviewElement(): (
+		element: FormElement,
+		setCurrentElement: Dispatch<SetStateAction<FormElement | undefined>>
+	) => JSX.Element {
+		return elementMap[this.elementType];
+	}
+
+	public update({
+		elementType,
+		name,
+		width,
+		extraData,
+	}: {
+		elementType: ElementType;
+		name: string;
+		width: Width;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		extraData: any[];
+	}) {
+		this.elementType = elementType;
+		this.name = name;
+		this.width = width;
+		this.extraData = extraData;
 	}
 }

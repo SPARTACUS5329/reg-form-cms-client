@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from "react";
-import AddElement from "../components/AddElement";
+import React, { useState } from "react";
 import { FormElement, NotificationType, FormRow } from "../utils/types";
 import { FormContext } from "../utils/FormContext";
-import FormPreview from "../components/FormPreview";
-// import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider, useDrop } from "react-dnd";
 import { Button, Input, Typography } from "antd";
 import axios from "../config/_axios";
 import openNotification from "../utils/openNotification";
 import Toolbar from "../components/Toolbar";
-import { Tool as ToolType, toolMap } from "../utils/constants";
-import Tool from "../components/Tool";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import getNextID from "../utils/getNextID";
 import Row from "../components/Row";
@@ -62,14 +56,12 @@ function CreateForm() {
 						className="form-input-1"
 						placeholder="Form Name"
 						value={formName}
-						onChange={(e: any) => {
+						onChange={(e) => {
 							e.preventDefault();
 							setFormName(e.target.value);
 						}}
 						style={{ marginBottom: "20px", width: "40vw" }}
 					/>
-					{/* <AddElement setCurrentForm={setCurrentForm} idGenerator={idGenerator} /> */}
-					{/* <FormPreview /> */}
 					{currentForm.map((row, index: number) => (
 						<Row
 							key={index}

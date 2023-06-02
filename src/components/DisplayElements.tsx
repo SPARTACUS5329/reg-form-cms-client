@@ -38,7 +38,7 @@ const elementMap = {
 	"CHECKBOX": (name: string, extraData: any) => (
 		<Checkbox style={{ color: "white", width: "100%" }}>{name}</Checkbox>
 	),
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	"DROPDOWN": (name: string, extraData: any) => (
 		<Select
 			placeholder={name}
@@ -52,6 +52,7 @@ const elementMap = {
 			style={{ width: "100%" }}
 		/>
 	),
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	"MULTI_SELECT": (name: string, extraData: any) => (
 		<Select
 			placeholder={name}

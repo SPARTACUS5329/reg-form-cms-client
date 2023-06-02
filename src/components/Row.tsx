@@ -1,10 +1,8 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useDrop } from "react-dnd";
-import { Tool as ToolType, toolMap } from "../utils/constants";
-import Tool from "./Tool";
 import { Row as AntRow } from "antd";
 import ElementsPreview from "./ElementPreview";
-import { ElementType, FormElement, FormRow, Width } from "../utils/types";
+import { FormElement, FormRow } from "../utils/types";
 
 function Row({
 	row,
@@ -15,6 +13,9 @@ function Row({
 	setCurrentForm: Dispatch<SetStateAction<FormRow[]>>;
 	setCurrentElement: Dispatch<SetStateAction<FormElement | undefined>>;
 }) {
+	// isOver is a stateful boolean used to check if an item is hovering
+	// over the drop zone
+	// eslint-disable-next-line
 	const [{ isOver }, drop] = useDrop(() => ({
 		accept: "image",
 		drop: (item: FormElement) => addTool(item),
@@ -30,6 +31,7 @@ function Row({
 					? {
 							rowID: curr.rowID,
 							elements: [...curr.elements, item],
+							// eslint-disable-next-line no-mixed-spaces-and-tabs
 					  }
 					: curr
 			)

@@ -52,12 +52,16 @@ const elementMap = {
 	) => (
 		<Select
 			placeholder={element.name}
-			options={element.extraData.map(({ option }: { option: string }) => {
-				return {
-					label: option,
-					value: option,
-				};
-			})}
+			options={
+				element.extraData
+					? element.extraData.map(({ option }: { option: string }) => {
+							return {
+								label: option,
+								value: option,
+							};
+					  })
+					: []
+			}
 			onFocus={() => setCurrentElement(element)}
 			style={{ width: "100%" }}
 		/>
@@ -69,12 +73,16 @@ const elementMap = {
 		<Select
 			placeholder={element.name}
 			mode="multiple"
-			options={element.extraData.map(({ option }: { option: string }) => {
-				return {
-					label: option,
-					value: option,
-				};
-			})}
+			options={
+				element.extraData
+					? element.extraData.map(({ option }: { option: string }) => {
+							return {
+								label: option,
+								value: option,
+							};
+					  })
+					: []
+			}
 			onFocus={() => setCurrentElement(element)}
 			style={{ width: "100%" }}
 		/>
