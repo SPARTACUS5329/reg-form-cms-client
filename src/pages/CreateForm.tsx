@@ -17,10 +17,10 @@ import Row from "../components/Row";
 import EditWindow from "../components/EditWindow";
 
 const { Text } = Typography;
+const rowIDGenerator = getNextID(0);
 
 function CreateForm() {
 	const [formName, setFormName] = useState<string>("");
-	const idGenerator = getNextID(0);
 	const [currentForm, setCurrentForm] = useState<FormRow[]>([
 		{
 			rowID: 0,
@@ -30,7 +30,8 @@ function CreateForm() {
 	const [currentElement, setCurrentElement] = useState<FormElement>();
 
 	const handleNewRow = () => {
-		setCurrentForm((curr) => [...curr, { rowID: idGenerator.next().value, elements: [] }]);
+		const newRowID = rowIDGenerator.next().value;
+		setCurrentForm((curr) => [...curr, { rowID: newRowID, elements: [] }]);
 	};
 
 	const handleSubmit = async () => {

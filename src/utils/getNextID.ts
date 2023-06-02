@@ -1,8 +1,6 @@
-function* getNextID(start: number): Generator<number, number, number> {
-	let current = start;
+function* getNextID(start: number): Generator<number> {
 	while (true) {
-		const next = current + 1;
-		current = yield next;
+		yield ++start;
 	}
 }
 
