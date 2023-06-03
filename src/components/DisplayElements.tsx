@@ -1,5 +1,5 @@
 import React from "react";
-import FormElement from "../utils/FormElement";
+import FormElement from "../utils/classes/FormElement";
 import { Col, Form } from "antd";
 
 const widthMap = {

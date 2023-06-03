@@ -3,7 +3,8 @@ import { useDrop } from "react-dnd";
 import { Row as AntRow } from "antd";
 import ElementsPreview from "./ElementPreview";
 import { FormElementParameters, FormRow } from "../utils/types";
-import FormElement from "../utils/FormElement";
+import FormElement from "../utils/classes/FormElement";
+import polyMap from "../utils/polyMap";
 
 function Row({
 	row,
@@ -26,7 +27,8 @@ function Row({
 	}));
 
 	const addTool = (item: FormElementParameters) => {
-		const newItem = new FormElement(item.elementType, item.name, item.width, item.extraData);
+		const ItemClass = polyMap[item.elementType];
+		const newItem = new ItemClass(item.elementType, item.name, item.width, item.extraData);
 		setCurrentForm((currentForm) =>
 			currentForm.map((curr) =>
 				curr.rowID === row.rowID

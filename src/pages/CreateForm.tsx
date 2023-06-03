@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NotificationType, FormRow } from "../utils/types";
-import FormElement from "../utils/FormElement";
+import FormElement from "../utils/classes/FormElement";
 import { FormContext } from "../utils/FormContext";
 import { Button, Input, Typography } from "antd";
 import axios from "../config/_axios";

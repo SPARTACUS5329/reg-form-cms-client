@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
-import FormElement from "../utils/FormElement";
+import FormElement from "../utils/classes/FormElement";
 import { Col } from "antd";
 
 const widthMap = {

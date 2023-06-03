@@ -3,7 +3,7 @@ import axios from "../config/_axios";
 import { useRoute } from "wouter";
 import { Button, Col, Row, Typography } from "antd";
 import { Form, FormRow, NotificationType } from "../utils/types";
-import FormElement from "../utils/FormElement";
+import FormElement from "../utils/classes/FormElement";
 import ElementsPreview from "../components/ElementPreview";
 import { FormContext } from "../utils/FormContext";
 import EditWindow from "../components/EditWindow";

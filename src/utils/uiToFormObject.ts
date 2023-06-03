@@ -1,4 +1,4 @@
-import FormElement from "./FormElement";
+import polyMap from "./polyMap";
 import { Form, FormElementParameters } from "./types";
 
 const uiToFormObject = (uiForm: {
@@ -9,10 +9,15 @@ const uiToFormObject = (uiForm: {
 	name: uiForm.name,
 	rows: uiForm.rows.map((row) => ({
 		rowID: row.rowID,
-		elements: row.elements.map(
-			(element) =>
-				new FormElement(element.elementType, element.name, element.width, element.extraData)
-		),
+		elements: row.elements.map((element) => {
+			const ItemClass = polyMap[element.elementType];
+			return new ItemClass(
+				element.elementType,
+				element.name,
+				element.width,
+				element.extraData
+			);
+		}),
 	})),
 	createdAt: uiForm.createdAt,
 });

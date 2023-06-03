@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { ElementType, FormElementParameters, FormRow } from "../utils/types";
-import FormElement from "../utils/FormElement";
+import FormElement from "../utils/classes/FormElement";
 import { Button, Col, Form as AntForm, Input, Row, Select, Typography } from "antd";
 import { elements, widths } from "../utils/elements";
 import ExtraData from "./ExtraData";
@@ -27,9 +27,9 @@ function EditWindow({
 				rowID: row.rowID,
 				elements: row.elements.map((element: FormElement) => {
 					if (element.name !== currentElement.name) return element;
-					element.update(values);
-					setCurrentElement(element);
-					return element;
+					const newElement = element.update(values);
+					setCurrentElement(newElement);
+					return newElement;
 				}),
 			}))
 		);

@@ -1,4 +1,4 @@
-import FormElement from "./FormElement";
+import FormElement from "./classes/FormElement";
 
 export enum ElementType {
 	TEXT = "TEXT",
