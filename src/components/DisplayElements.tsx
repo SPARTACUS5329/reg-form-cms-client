@@ -15,21 +15,11 @@ function DisplayElements({ elements }: { elements: FormElement[] }) {
 			{elements.length === 0 && (
 				<div style={{ border: "1px solid white", height: "1px", width: "100%" }}></div>
 			)}
-			{elements.map((element, index) => {
-				const registerElement = new FormElement(
-					element.elementType,
-					element.name,
-					element.width,
-					element.extraData
-				);
-				return (
-					<Col key={index} span={widthMap[element.width]}>
-						<Form.Item name={registerElement.name}>
-							{registerElement.registerElement()}
-						</Form.Item>
-					</Col>
-				);
-			})}
+			{elements.map((element, index) => (
+				<Col key={index} span={widthMap[element.width]}>
+					<Form.Item name={element.name}>{element.registerElement()}</Form.Item>
+				</Col>
+			))}
 		</>
 	);
 }

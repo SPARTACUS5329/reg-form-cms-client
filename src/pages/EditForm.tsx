@@ -8,6 +8,7 @@ import ElementsPreview from "../components/ElementPreview";
 import { FormContext } from "../utils/FormContext";
 import EditWindow from "../components/EditWindow";
 import openNotification from "../utils/openNotification";
+import uiToFormObject from "../utils/uiToFormObject";
 
 const { Text } = Typography;
 
@@ -21,12 +22,13 @@ function EditForm() {
 	useEffect(() => {
 		const getForm = async () => {
 			try {
-				const result: { data: Form[] } = await axios.post("/forms", {
+				const result = await axios.post("/forms", {
 					filters: { name: params.name },
 				});
 				if (!result.data || result.data.length === 0) return;
-				setCurrentForm(result.data[0]);
-				setEditableForm(result.data[0].rows);
+				const objectForm = uiToFormObject(result.data[0]);
+				setCurrentForm(objectForm);
+				setEditableForm(objectForm.rows);
 			} catch (error) {
 				console.error(error);
 			}
