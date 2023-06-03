@@ -1,3 +1,5 @@
+import FormElement from "./classes/FormElement";
+
 export enum ElementType {
 	TEXT = "TEXT",
 	RADIO = "RADIO",
@@ -12,11 +14,11 @@ export enum Width {
 	THIRD = "THIRD",
 }
 
-export interface FormElement {
+export interface FormElementParameters {
 	elementType: ElementType;
 	name: string;
 	width: Width;
-	extraData?: {
+	extraData: {
 		option: string;
 	}[];
 }

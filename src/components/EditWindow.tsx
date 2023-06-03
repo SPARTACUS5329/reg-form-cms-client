@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction, useContext, useState } from "react";
-import { ElementType, FormElement, Form, FormRow, Width } from "../utils/types";
+import React, { Dispatch, SetStateAction, useState } from "react";
+import { ElementType, FormElementParameters, FormRow } from "../utils/types";
+import FormElement from "../utils/classes/FormElement";
 import { Button, Col, Form as AntForm, Input, Row, Select, Typography } from "antd";
 import { elements, widths } from "../utils/elements";
 import ExtraData from "./ExtraData";
-import { FormContext } from "../utils/FormContext";
 
 const { Text } = Typography;
 
@@ -21,16 +21,18 @@ function EditWindow({
 	);
 	const [form] = AntForm.useForm();
 
-	const handleFinish = (values: FormElement) => {
+	const handleFinish = (values: FormElementParameters) => {
 		setCurrentForm((form) =>
 			form.map((row) => ({
 				rowID: row.rowID,
-				elements: row.elements.map((element: FormElement) =>
-					element.name === currentElement.name ? values : element
-				),
+				elements: row.elements.map((element: FormElement) => {
+					if (element.name !== currentElement.name) return element;
+					const newElement = element.update(values);
+					setCurrentElement(newElement);
+					return newElement;
+				}),
 			}))
 		);
-		setCurrentElement(values);
 	};
 
 	const handleDelete = () => {

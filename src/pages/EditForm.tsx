@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "../config/_axios";
 import { useRoute } from "wouter";
 import { Button, Col, Row, Typography } from "antd";
-import { Form, FormElement, FormRow, NotificationType } from "../utils/types";
+import { Form, FormRow, NotificationType } from "../utils/types";
+import FormElement from "../utils/classes/FormElement";
 import ElementsPreview from "../components/ElementPreview";
 import { FormContext } from "../utils/FormContext";
 import EditWindow from "../components/EditWindow";
 import openNotification from "../utils/openNotification";
+import uiToFormObject from "../utils/uiToFormObject";
 
 const { Text } = Typography;
 
@@ -20,12 +22,13 @@ function EditForm() {
 	useEffect(() => {
 		const getForm = async () => {
 			try {
-				const result: { data: Form[] } = await axios.post("/forms", {
+				const result = await axios.post("/forms", {
 					filters: { name: params.name },
 				});
 				if (!result.data || result.data.length === 0) return;
-				setCurrentForm(result.data[0]);
-				setEditableForm(result.data[0].rows);
+				const objectForm = uiToFormObject(result.data[0]);
+				setCurrentForm(objectForm);
+				setEditableForm(objectForm.rows);
 			} catch (error) {
 				console.error(error);
 			}

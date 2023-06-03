@@ -5,6 +5,7 @@ import axios from "../config/_axios";
 import { Row, Typography, Form as AntForm, Button, Col } from "antd";
 import DisplayElements from "../components/DisplayElements";
 import openNotification from "../utils/openNotification";
+import uiToFormObject from "../utils/uiToFormObject";
 
 const { Text } = Typography;
 
@@ -19,7 +20,7 @@ function ViewForm() {
 			try {
 				const result = await axios.post("/forms", { filters: { name: params.name } });
 				if (!result.data || result.data.length === 0) return;
-				setUIForm(result.data[0]);
+				setUIForm(uiToFormObject(result.data[0]));
 			} catch (error) {
 				console.error(error);
 			}
