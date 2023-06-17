@@ -5,6 +5,7 @@ import ElementsPreview from "./ElementPreview";
 import { FormElementParameters, FormRow } from "../utils/types";
 import FormElement from "../utils/classes/FormElement";
 import polyMap from "../utils/polyMap";
+import { Validation } from "../utils/constants";
 
 function Row({
 	row,
@@ -28,7 +29,14 @@ function Row({
 
 	const addTool = (item: FormElementParameters) => {
 		const ItemClass = polyMap[item.elementType];
-		const newItem = new ItemClass(item.elementType, item.name, item.width, item.extraData);
+		const newItem = new ItemClass(
+			item.elementType,
+			item.name,
+			item.width,
+			item.extraData,
+			Validation["NONE"],
+			false
+		);
 		setCurrentForm((currentForm) =>
 			currentForm.map((curr) =>
 				curr.rowID === row.rowID

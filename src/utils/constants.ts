@@ -44,3 +44,21 @@ export const optionBasedFields = [
 	ElementType["DROPDOWN"],
 	ElementType["MULTI_SELECT"],
 ];
+
+export enum Validation {
+	NONE = "NONE",
+	NAME = "NAME",
+	PHONE = "PHONE",
+	// EMAIL = "EMAIL",
+	// SMAIL = "SMAIL",
+	ROLLNO = "ROLLNO",
+}
+
+export const ruleObject = {
+	"NONE": /^.*$/,
+	"NAME": /^[a-z]*$/,
+	"PHONE": /^\d{10}$/,
+	// "EMAIL": /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+	// "SMAIL": ,
+	"ROLLNO": /^[a-z]{2}\d{2}[a-z]\d{3}$/i,
+};

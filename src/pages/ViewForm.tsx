@@ -30,7 +30,6 @@ function ViewForm() {
 
 	const handleFinish = async (values: any) => {
 		try {
-			console.log(values);
 			const result = await axios.post(`/register/${uiForm?.name}`, { details: values });
 			if (result.data === "SUCCESS")
 				return openNotification(NotificationType["SUCCESS"], "Successfully registered!");

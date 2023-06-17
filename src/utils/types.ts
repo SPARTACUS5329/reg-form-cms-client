@@ -1,4 +1,5 @@
 import FormElement from "./classes/FormElement";
+import { Validation } from "./constants";
 
 export enum ElementType {
 	TEXT = "TEXT",
@@ -18,6 +19,8 @@ export interface FormElementParameters {
 	elementType: ElementType;
 	name: string;
 	width: Width;
+	validation: Validation;
+	isRequired: boolean;
 	extraData: {
 		option: string;
 	}[];

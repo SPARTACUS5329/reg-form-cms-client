@@ -40,3 +40,22 @@ export const widths: DisplayElement[] = [
 		value: "THIRD",
 	},
 ];
+
+export const validators: DisplayElement[] = [
+	{
+		label: "None",
+		value: "NONE",
+	},
+	{
+		label: "Name",
+		value: "NAME",
+	},
+	{
+		label: "Phone",
+		value: "PHONE",
+	},
+	{
+		label: "Roll No",
+		value: "ROLLNO",
+	},
+];

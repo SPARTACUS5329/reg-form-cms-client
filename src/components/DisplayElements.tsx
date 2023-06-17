@@ -1,6 +1,7 @@
 import React from "react";
 import FormElement from "../utils/classes/FormElement";
 import { Col, Form } from "antd";
+import generateRules from "../utils/generateRules";
 
 const widthMap = {
 	"HALF": 10,
@@ -17,7 +18,13 @@ function DisplayElements({ elements }: { elements: FormElement[] }) {
 			)}
 			{elements.map((element, index) => (
 				<Col key={index} span={widthMap[element.width]}>
-					<Form.Item name={element.name}>{element.registerElement()}</Form.Item>
+					<Form.Item
+						name={element.name}
+						required={element.isRequired}
+						rules={generateRules(element)}
+					>
+						{element.registerElement()}
+					</Form.Item>
 				</Col>
 			))}
 		</>

@@ -1,9 +1,19 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { ElementType, FormElementParameters, FormRow } from "../utils/types";
 import FormElement from "../utils/classes/FormElement";
-import { Button, Col, Form as AntForm, Input, Row, Select, Typography } from "antd";
-import { elements, widths } from "../utils/elements";
+import {
+	Button,
+	Col as AntCol,
+	Form as AntForm,
+	Input,
+	Row as AntRow,
+	Select,
+	Typography,
+	Checkbox,
+} from "antd";
+import { elements, validators, widths } from "../utils/elements";
 import ExtraData from "./ExtraData";
+import { Validation } from "../utils/constants";
 
 const { Text } = Typography;
 
@@ -52,8 +62,8 @@ function EditWindow({
 				{currentElement.name || "Give a name"}
 			</Text>
 			<AntForm form={form} onFinish={handleFinish}>
-				<Row className="centered">
-					<Col span={20}>
+				<AntRow className="centered">
+					<AntCol span={20}>
 						<AntForm.Item name="elementType">
 							<Select
 								onChange={(value: ElementType) => {
@@ -63,43 +73,65 @@ function EditWindow({
 								options={elements}
 							/>
 						</AntForm.Item>
-					</Col>
-				</Row>
-				<Row className="centered">
-					<Col span={20}>
+					</AntCol>
+				</AntRow>
+				<AntRow className="centered">
+					<AntCol span={20}>
 						<AntForm.Item name="name">
 							<Input placeholder="Name" value={currentElement.name} />
 						</AntForm.Item>
-					</Col>
-				</Row>
-				<Row className="centered">
-					<Col span={20}>
+					</AntCol>
+				</AntRow>
+				<AntRow className="centered">
+					<AntCol span={20}>
 						<AntForm.Item name="width">
 							<Select placeholder="Width" options={widths} />
 						</AntForm.Item>
-					</Col>
-				</Row>
-				<Row className="centered">
-					<Col span={20}>
+					</AntCol>
+				</AntRow>
+				<AntRow className="centered">
+					<AntCol span={20}>
 						<AntForm.Item name="extraData">
 							<ExtraData elementType={currentElementType} />
 						</AntForm.Item>
-					</Col>
-				</Row>
-				<Row className="even-spaced">
-					<Col span={6}>
+					</AntCol>
+				</AntRow>
+				<AntRow className="even-spaced">
+					<AntCol span={8}>
+						<AntForm.Item name="validation">
+							<Select
+								placeholder="Validation"
+								options={validators}
+								defaultValue={Validation["NONE"]}
+							/>
+						</AntForm.Item>
+					</AntCol>
+					<AntCol span={8}>
+						<AntForm.Item name="isRequired">
+							<Select
+								placeholder="Required"
+								options={[
+									{ label: "Yes", value: true },
+									{ label: "No", value: false },
+								]}
+							/>
+						</AntForm.Item>
+					</AntCol>
+				</AntRow>
+				<AntRow className="even-spaced">
+					<AntCol span={6}>
 						<AntForm.Item>
 							<Button type="primary" htmlType="submit">
 								Update
 							</Button>
 						</AntForm.Item>
-					</Col>
-					<Col span={6}>
+					</AntCol>
+					<AntCol span={6}>
 						<Button type="dashed" onClick={handleDelete}>
 							Delete
 						</Button>
-					</Col>
-				</Row>
+					</AntCol>
+				</AntRow>
 			</AntForm>
 		</>
 	);

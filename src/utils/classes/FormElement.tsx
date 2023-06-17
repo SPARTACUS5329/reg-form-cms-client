@@ -1,6 +1,7 @@
 import React from "react";
 import { ElementType, Width } from "../types";
 import polyMap from "../polyMap";
+import { Validation } from "../constants";
 
 class FormElement {
 	public elementType: ElementType;
@@ -8,34 +9,44 @@ class FormElement {
 	public width: Width;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public extraData: any[] | undefined;
+	public validation: Validation;
+	public isRequired: boolean;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	constructor(
 		elementType: ElementType,
 		name: string,
 		width: Width,
-		extraData: any[] | undefined
+		extraData: any[] | undefined,
+		validation: Validation,
+		isRequired: boolean
 	) {
 		this.elementType = elementType;
 		this.name = name;
 		this.width = width;
 		this.extraData = extraData;
+		this.validation = validation;
+		this.isRequired = isRequired;
 	}
 
 	public update({
 		elementType,
 		name,
 		width,
+		validation,
+		isRequired,
 		extraData,
 	}: {
 		elementType: ElementType;
 		name: string;
 		width: Width;
+		validation: Validation;
+		isRequired: boolean;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		extraData: any[] | undefined;
 	}): FormElement {
 		const ItemClass = polyMap[elementType];
-		return new ItemClass(elementType, name, width, extraData);
+		return new ItemClass(elementType, name, width, extraData, validation, isRequired);
 	}
 
 	public registerElement(): JSX.Element {

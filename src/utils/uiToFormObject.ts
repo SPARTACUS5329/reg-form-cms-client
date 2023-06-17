@@ -1,3 +1,4 @@
+import { Validation } from "./constants";
 import polyMap from "./polyMap";
 import { Form, FormElementParameters } from "./types";
 
@@ -15,7 +16,9 @@ const uiToFormObject = (uiForm: {
 				element.elementType,
 				element.name,
 				element.width,
-				element.extraData
+				element.extraData,
+				element.validation,
+				element.isRequired
 			);
 		}),
 	})),
