@@ -7,6 +7,7 @@ export enum ElementType {
 	CHECKBOX = "CHECKBOX",
 	DROPDOWN = "DROPDOWN",
 	MULTI_SELECT = "MULTI_SELECT",
+	NEW_STEP = "NEW_STEP",
 }
 
 export enum Width {
