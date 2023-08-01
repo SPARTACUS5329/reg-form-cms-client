@@ -62,3 +62,8 @@ export const ruleObject = {
 	// "SMAIL": ,
 	"ROLLNO": /^[a-z]{2}\d{2}[a-z]\d{3}$/i,
 };
+
+export enum Responses {
+	SUCCESS = "SUCCESS",
+	ERROR = "ERROR",
+}

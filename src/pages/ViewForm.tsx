@@ -6,6 +6,8 @@ import { Row, Typography, Form as AntForm, Button, Col } from "antd";
 import DisplayElements from "../components/DisplayElements";
 import openNotification from "../utils/openNotification";
 import uiToFormObject from "../utils/uiToFormObject";
+import RegistrationMultiStep from "../components/RegistrationMultiStep";
+import { Responses } from "../utils/constants";
 
 const { Text } = Typography;
 
@@ -13,6 +15,8 @@ function ViewForm() {
 	const [match, params] = useRoute("/register/:name");
 	if (!match || !params?.name) return <div>Sorry this form does not exist</div>;
 	const [uiForm, setUIForm] = useState<Form>();
+	const [currentStep, setCurrentStep] = useState<number>(0);
+	const [formValues, setFormValues] = useState<object>({});
 	const [regDetails] = AntForm.useForm();
 
 	useEffect(() => {
@@ -30,8 +34,9 @@ function ViewForm() {
 
 	const handleFinish = async (values: any) => {
 		try {
-			const result = await axios.post(`/register/${uiForm?.name}`, { details: values });
-			if (result.data === "SUCCESS")
+			const details = { ...formValues, ...values };
+			const result = await axios.post(`/register/${uiForm?.name}`, { details });
+			if (result.data === Responses["SUCCESS"])
 				return openNotification(NotificationType["SUCCESS"], "Successfully registered!");
 		} catch (error: any) {
 			console.error(error);
@@ -50,21 +55,14 @@ function ViewForm() {
 				{uiForm?.name}
 			</Text>
 			<AntForm form={regDetails} name="register" onFinish={handleFinish}>
-				{uiForm?.rows.map((row, index) => (
-					<Row key={index} className="even-spaced" style={{ marginTop: "20px" }}>
-						<DisplayElements elements={row.elements} />
-					</Row>
-				))}
 				{uiForm && (
-					<Row className="centered">
-						<Col>
-							<AntForm.Item>
-								<Button type="primary" htmlType="submit">
-									Submit
-								</Button>
-							</AntForm.Item>
-						</Col>
-					</Row>
+					<RegistrationMultiStep
+						regDetails={regDetails}
+						currentStep={currentStep}
+						setCurrentStep={setCurrentStep}
+						setFormValues={setFormValues}
+						form={uiForm?.steps}
+					></RegistrationMultiStep>
 				)}
 			</AntForm>
 		</div>

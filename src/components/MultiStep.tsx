@@ -34,6 +34,7 @@ function MultiStep({
 			<Steps
 				current={currentStep}
 				items={steps.map((step) => ({ key: step.title, title: step.title }))}
+				className="centered"
 			/>
 			{steps[currentStep].content}
 			<div style={{ marginTop: "20px" }}>

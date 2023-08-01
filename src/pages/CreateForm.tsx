@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { NotificationType, FormRow } from "../utils/types";
 import FormElement from "../utils/classes/FormElement";
 import { FormContext } from "../utils/FormContext";
-import { Button, Input, Typography, Steps } from "antd";
+import { Button, Input, Typography } from "antd";
 import axios from "../config/_axios";
 import openNotification from "../utils/openNotification";
 import Toolbar from "../components/Toolbar";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import getNextID from "../utils/getNextID";
 import EditWindow from "../components/EditWindow";
-import generateFormSteps from "../utils/generateFormSteps";
 import MultiStep from "../components/MultiStep";
 
 const { Text } = Typography;
@@ -48,16 +47,15 @@ function CreateForm() {
 			if (formName === "") {
 				return openNotification(NotificationType["ERROR"], "Invalid form name");
 			}
-			console.log(currentForm);
-			// const result = await axios.post("/create-form", {
-			// 	name: formName,
-			// 	rows: currentForm,
-			// });
-			// if (result.data === "SUCCESS") {
-			// 	setFormName("");
-			// 	return openNotification(NotificationType["SUCCESS"], "Form created successfully");
-			// }
-			// return openNotification(NotificationType["ERROR"], "An error occurred");
+			const result = await axios.post("/create-form", {
+				name: formName,
+				steps: currentForm,
+			});
+			if (result.data === "SUCCESS") {
+				setFormName("");
+				return openNotification(NotificationType["SUCCESS"], "Form created successfully");
+			}
+			return openNotification(NotificationType["ERROR"], "An error occurred");
 		} catch (error) {
 			console.error(error);
 		}

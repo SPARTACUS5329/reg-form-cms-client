@@ -29,8 +29,13 @@ export interface FormElementParameters {
 
 export interface Form {
 	name: string;
-	rows: FormRow[];
+	steps: FormRow[][];
 	createdAt: string;
+}
+
+export interface User {
+	name: string;
+	forms: Form[];
 }
 
 export enum NotificationType {
