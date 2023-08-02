@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NotificationType, FormRow } from "../utils/types";
 import FormElement from "../utils/classes/FormElement";
 import { FormContext } from "../utils/FormContext";
@@ -10,6 +10,7 @@ import { PlusCircleOutlined } from "@ant-design/icons";
 import getNextID from "../utils/getNextID";
 import EditWindow from "../components/EditWindow";
 import MultiStep from "../components/MultiStep";
+import { UserContext } from "../utils/UserContext";
 
 const { Text } = Typography;
 const rowIDGenerator = getNextID(0);
@@ -26,6 +27,7 @@ function CreateForm() {
 		],
 	]);
 	const [currentElement, setCurrentElement] = useState<FormElement>();
+	const user = useContext(UserContext);
 
 	const handleNewRow = () => {
 		const newRowID = rowIDGenerator.next().value;
@@ -50,6 +52,7 @@ function CreateForm() {
 			const result = await axios.post("/create-form", {
 				name: formName,
 				steps: currentForm,
+				user,
 			});
 			if (result.data === "SUCCESS") {
 				setFormName("");

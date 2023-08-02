@@ -22,7 +22,7 @@ function ViewForm() {
 	useEffect(() => {
 		const getForm = async () => {
 			try {
-				const result = await axios.post("/forms", { filters: { name: params.name } });
+				const result = await axios.post("/forms", { name: params.name });
 				if (!result.data || result.data.length === 0) return;
 				setUIForm(uiToFormObject(result.data[0]));
 			} catch (error) {
