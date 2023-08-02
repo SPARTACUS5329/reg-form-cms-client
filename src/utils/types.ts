@@ -7,6 +7,7 @@ export enum ElementType {
 	CHECKBOX = "CHECKBOX",
 	DROPDOWN = "DROPDOWN",
 	MULTI_SELECT = "MULTI_SELECT",
+	NEW_STEP = "NEW_STEP",
 }
 
 export enum Width {
@@ -28,8 +29,13 @@ export interface FormElementParameters {
 
 export interface Form {
 	name: string;
-	rows: FormRow[];
+	steps: FormRow[][];
 	createdAt: string;
+}
+
+export interface User {
+	name: string;
+	forms: Form[];
 }
 
 export enum NotificationType {

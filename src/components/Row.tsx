@@ -13,7 +13,7 @@ function Row({
 	setCurrentElement,
 }: {
 	row: FormRow;
-	setCurrentForm: Dispatch<SetStateAction<FormRow[]>>;
+	setCurrentForm: Dispatch<SetStateAction<FormRow[][]>>;
 	setCurrentElement: Dispatch<SetStateAction<FormElement | undefined>>;
 }) {
 	// isOver is a stateful boolean used to check if an item is hovering
@@ -37,15 +37,18 @@ function Row({
 			Validation["NONE"],
 			false
 		);
-		setCurrentForm((currentForm) =>
-			currentForm.map((curr) =>
-				curr.rowID === row.rowID
-					? {
-							rowID: curr.rowID,
-							elements: [...curr.elements, newItem],
-							// eslint-disable-next-line no-mixed-spaces-and-tabs
-					  }
-					: curr
+		console.log(row.rowID);
+		setCurrentForm((steps) =>
+			steps.map((step) =>
+				step.map((curr) =>
+					curr.rowID === row.rowID
+						? {
+								rowID: curr.rowID,
+								elements: [...curr.elements, newItem],
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+						  }
+						: curr
+				)
 			)
 		);
 	};

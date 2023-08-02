@@ -9,7 +9,6 @@ import {
 	Row as AntRow,
 	Select,
 	Typography,
-	Checkbox,
 } from "antd";
 import { elements, validators, widths } from "../utils/elements";
 import ExtraData from "./ExtraData";
@@ -23,7 +22,7 @@ function EditWindow({
 	setCurrentElement,
 }: {
 	currentElement: FormElement;
-	setCurrentForm: Dispatch<SetStateAction<FormRow[]>>;
+	setCurrentForm: Dispatch<SetStateAction<FormRow[][]>>;
 	setCurrentElement: Dispatch<SetStateAction<FormElement | undefined>>;
 }) {
 	const [currentElementType, setCurrentElementType] = useState<ElementType>(
@@ -33,26 +32,30 @@ function EditWindow({
 
 	const handleFinish = (values: FormElementParameters) => {
 		setCurrentForm((form) =>
-			form.map((row) => ({
-				rowID: row.rowID,
-				elements: row.elements.map((element: FormElement) => {
-					if (element.name !== currentElement.name) return element;
-					const newElement = element.update(values);
-					setCurrentElement(newElement);
-					return newElement;
-				}),
-			}))
+			form.map((step) =>
+				step.map((row) => ({
+					rowID: row.rowID,
+					elements: row.elements.map((element: FormElement) => {
+						if (element.name !== currentElement.name) return element;
+						const newElement = element.update(values);
+						setCurrentElement(newElement);
+						return newElement;
+					}),
+				}))
+			)
 		);
 	};
 
 	const handleDelete = () => {
 		setCurrentForm((form) =>
-			form.map((row) => ({
-				rowID: row.rowID,
-				elements: row.elements.filter(
-					(element: FormElement) => element.name !== currentElement.name
-				),
-			}))
+			form.map((step) =>
+				step.map((row) => ({
+					rowID: row.rowID,
+					elements: row.elements.filter(
+						(element: FormElement) => element.name !== currentElement.name
+					),
+				}))
+			)
 		);
 	};
 
