@@ -11,6 +11,8 @@ import getNextID from "../utils/getNextID";
 import EditWindow from "../components/EditWindow";
 import MultiStep from "../components/MultiStep";
 import { UserContext } from "../utils/UserContext";
+import { CurrentElementContext } from "../utils/CurrentElementContext";
+import { Responses } from "../utils/constants";
 
 const { Text } = Typography;
 const rowIDGenerator = getNextID(0);
@@ -26,7 +28,7 @@ function CreateForm() {
 			},
 		],
 	]);
-	const [currentElement, setCurrentElement] = useState<FormElement>();
+	const [currentElement, setCurrentElement] = useState<FormElement | null>(null);
 	const user = useContext(UserContext);
 
 	const handleNewRow = () => {
@@ -54,7 +56,7 @@ function CreateForm() {
 				steps: currentForm,
 				user,
 			});
-			if (result.data === "SUCCESS") {
+			if (result.data === Responses["SUCCESS"]) {
 				setFormName("");
 				return openNotification(NotificationType["SUCCESS"], "Form created successfully");
 			}
@@ -65,63 +67,62 @@ function CreateForm() {
 	};
 
 	return (
-		<FormContext.Provider value={currentForm}>
-			<Toolbar />
-			<div className="between-spaced">
-				<div style={{ width: "70%" }}>
-					<Input
-						className="form-input-1"
-						placeholder="Form Name"
-						value={formName}
-						onChange={(e) => {
-							e.preventDefault();
-							setFormName(e.target.value);
-						}}
-						style={{ marginBottom: "20px", width: "40vw" }}
-					/>
-					<MultiStep
-						currentStep={currentStep}
-						setCurrentStep={setCurrentStep}
-						currentForm={currentForm}
-						setCurrentForm={setCurrentForm}
-						setCurrentElement={setCurrentElement}
-						handleSubmit={handleSubmit}
-					/>
-					<div className="vertical-center">
-						<div className="centered" style={{ marginTop: "20px" }}>
-							<Button type="dashed" onClick={handleNewRow}>
-								<PlusCircleOutlined />
-							</Button>
-						</div>
-						<div className="centered" style={{ marginTop: "20px", gap: "20px" }}>
-							<div>
-								<Button onClick={handleNewStep}>Add Step</Button>
+		<FormContext.Provider value={{ currentForm, setCurrentForm }}>
+			<CurrentElementContext.Provider value={{ currentElement, setCurrentElement }}>
+				<Toolbar />
+				<div className="between-spaced">
+					<div style={{ width: "70%" }}>
+						<Input
+							className="form-input-1"
+							placeholder="Form Name"
+							value={formName}
+							onChange={(e) => {
+								e.preventDefault();
+								setFormName(e.target.value);
+							}}
+							style={{ marginBottom: "20px", width: "40vw" }}
+						/>
+						<MultiStep
+							currentStep={currentStep}
+							setCurrentStep={setCurrentStep}
+							handleSubmit={handleSubmit}
+						/>
+						<div className="vertical-center">
+							<div className="centered" style={{ marginTop: "20px" }}>
+								<Button type="dashed" onClick={handleNewRow}>
+									<PlusCircleOutlined />
+								</Button>
+							</div>
+							<div className="centered" style={{ marginTop: "20px", gap: "20px" }}>
+								<div>
+									<Button onClick={handleNewStep}>Add Step</Button>
+								</div>
 							</div>
 						</div>
 					</div>
+					<div
+						style={{
+							width: "25%",
+							border: "1px solid white",
+							height: "90vh",
+							borderRadius: "5px",
+						}}
+					>
+						{currentElement ? (
+							<EditWindow />
+						) : (
+							<>
+								<Text style={{ color: "white", fontSize: "2rem" }}>
+									Pick a field,{" "}
+								</Text>
+								<Text style={{ color: "white", fontSize: "1.5rem" }}>
+									any field
+								</Text>
+							</>
+						)}
+					</div>
 				</div>
-				<div
-					style={{
-						width: "25%",
-						border: "1px solid white",
-						height: "90vh",
-						borderRadius: "5px",
-					}}
-				>
-					{currentElement ? (
-						<EditWindow
-							currentElement={currentElement}
-							setCurrentForm={setCurrentForm}
-							setCurrentElement={setCurrentElement}
-						/>
-					) : (
-						<>
-							<Text style={{ color: "white", fontSize: "2rem" }}>Pick a field, </Text>
-							<Text style={{ color: "white", fontSize: "1.5rem" }}>any field</Text>
-						</>
-					)}
-				</div>
-			</div>
+			</CurrentElementContext.Provider>
 		</FormContext.Provider>
 	);
 }

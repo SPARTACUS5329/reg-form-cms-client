@@ -1,25 +1,19 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useContext } from "react";
 import { Button, Steps } from "antd";
-import { FormRow } from "../utils/types";
-import FormElement from "../utils/classes/FormElement";
 import generateFormSteps from "../utils/generateFormSteps";
+import { FormContext } from "../utils/FormContext";
 
 function MultiStep({
 	currentStep,
 	setCurrentStep,
-	currentForm,
-	setCurrentForm,
-	setCurrentElement,
 	handleSubmit,
 }: {
 	currentStep: number;
 	setCurrentStep: Dispatch<SetStateAction<number>>;
-	currentForm: FormRow[][];
-	setCurrentForm: Dispatch<SetStateAction<FormRow[][]>>;
-	setCurrentElement: Dispatch<SetStateAction<FormElement | undefined>>;
 	handleSubmit: () => Promise<void>;
 }) {
-	const steps = generateFormSteps(currentForm, setCurrentForm, setCurrentElement);
+	const { currentForm, setCurrentForm } = useContext(FormContext);
+	const steps = generateFormSteps(currentForm, setCurrentForm);
 
 	const nextStep = () => {
 		setCurrentStep(currentStep + 1);

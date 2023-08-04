@@ -3,18 +3,15 @@ import { useDrop } from "react-dnd";
 import { Row as AntRow } from "antd";
 import ElementsPreview from "./ElementPreview";
 import { FormElementParameters, FormRow } from "../utils/types";
-import FormElement from "../utils/classes/FormElement";
 import polyMap from "../utils/polyMap";
 import { Validation } from "../utils/constants";
 
 function Row({
 	row,
 	setCurrentForm,
-	setCurrentElement,
 }: {
 	row: FormRow;
 	setCurrentForm: Dispatch<SetStateAction<FormRow[][]>>;
-	setCurrentElement: Dispatch<SetStateAction<FormElement | undefined>>;
 }) {
 	// isOver is a stateful boolean used to check if an item is hovering
 	// over the drop zone
@@ -65,7 +62,7 @@ function Row({
 			ref={drop}
 		>
 			<AntRow gutter={12} className="even-spaced">
-				<ElementsPreview elements={row.elements} setCurrentElement={setCurrentElement} />
+				<ElementsPreview elements={row.elements} />
 			</AntRow>
 		</div>
 	);

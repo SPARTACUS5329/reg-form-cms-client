@@ -55,7 +55,7 @@ class FormElement {
 
 	public editableElement(
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		setCurrentElement: React.Dispatch<React.SetStateAction<FormElement | undefined>>
+		setCurrentElement: React.Dispatch<React.SetStateAction<FormElement | null>>
 	): JSX.Element {
 		return <div>Editable Element</div>;
 	}

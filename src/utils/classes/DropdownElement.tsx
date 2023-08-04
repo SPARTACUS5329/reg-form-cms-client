@@ -23,7 +23,7 @@ class DropdownElement extends FormElement {
 	}
 
 	public editableElement(
-		setCurrentElement: React.Dispatch<React.SetStateAction<FormElement | undefined>>
+		setCurrentElement: React.Dispatch<React.SetStateAction<FormElement | null>>
 	): JSX.Element {
 		return (
 			<Select

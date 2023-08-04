@@ -11,7 +11,7 @@ class TextElement extends FormElement {
 	}
 
 	public editableElement(
-		setCurrentElement: Dispatch<SetStateAction<FormElement | undefined>>
+		setCurrentElement: Dispatch<SetStateAction<FormElement | null>>
 	): JSX.Element {
 		return (
 			<Input

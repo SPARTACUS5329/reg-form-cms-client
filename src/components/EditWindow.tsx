@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
-import { ElementType, FormElementParameters, FormRow } from "../utils/types";
+import React, { useContext, useState } from "react";
+import { ElementType, FormElementParameters } from "../utils/types";
 import FormElement from "../utils/classes/FormElement";
 import {
 	Button,
@@ -13,18 +13,15 @@ import {
 import { elements, validators, widths } from "../utils/elements";
 import ExtraData from "./ExtraData";
 import { Validation } from "../utils/constants";
+import { CurrentElementContext } from "../utils/CurrentElementContext";
+import { FormContext } from "../utils/FormContext";
 
 const { Text } = Typography;
 
-function EditWindow({
-	currentElement,
-	setCurrentForm,
-	setCurrentElement,
-}: {
-	currentElement: FormElement;
-	setCurrentForm: Dispatch<SetStateAction<FormRow[][]>>;
-	setCurrentElement: Dispatch<SetStateAction<FormElement | undefined>>;
-}) {
+function EditWindow() {
+	const { setCurrentForm } = useContext(FormContext);
+	const { currentElement, setCurrentElement } = useContext(CurrentElementContext);
+	if (!currentElement) return <div></div>;
 	const [currentElementType, setCurrentElementType] = useState<ElementType>(
 		currentElement.elementType
 	);
@@ -72,6 +69,7 @@ function EditWindow({
 								onChange={(value: ElementType) => {
 									setCurrentElementType(value);
 								}}
+								defaultValue={currentElementType}
 								placeholder="Input Type"
 								options={elements}
 							/>

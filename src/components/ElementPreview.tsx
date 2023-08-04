@@ -1,6 +1,7 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { useContext } from "react";
 import FormElement from "../utils/classes/FormElement";
 import { Col } from "antd";
+import { CurrentElementContext } from "../utils/CurrentElementContext";
 
 const widthMap = {
 	"HALF": 10,
@@ -8,13 +9,8 @@ const widthMap = {
 	"THIRD": 6,
 };
 
-function ElementsPreview({
-	elements,
-	setCurrentElement,
-}: {
-	elements: FormElement[];
-	setCurrentElement: Dispatch<SetStateAction<FormElement | undefined>>;
-}) {
+function ElementsPreview({ elements }: { elements: FormElement[] }) {
+	const { setCurrentElement } = useContext(CurrentElementContext);
 	return (
 		<>
 			{elements.map((element, index) => (
