@@ -1,12 +1,14 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useContext, useEffect } from "react";
 import { Button, Form, Input } from "antd";
 import axios from "../config/_axios";
 import { Responses } from "../utils/constants";
 import openNotification from "../utils/openNotification";
 import { NotificationType, User } from "../utils/types";
 import { useLocation } from "wouter";
+import { UserContext } from "../utils/UserContext";
 
 function Login({ setUser }: { setUser: Dispatch<SetStateAction<User | null>> }) {
+	const user = useContext(UserContext);
 	const [form] = Form.useForm();
 	const [, setRoute] = useLocation();
 
@@ -15,7 +17,6 @@ function Login({ setUser }: { setUser: Dispatch<SetStateAction<User | null>> }) 
 			const result = await axios.post("/user/login", values);
 			if (result.data.message === Responses["SUCCESS"]) {
 				setUser(result.data.user);
-				return setRoute("/");
 			}
 		} catch (error: any) {
 			console.error(error);
@@ -27,6 +28,10 @@ function Login({ setUser }: { setUser: Dispatch<SetStateAction<User | null>> }) 
 			);
 		}
 	};
+
+	useEffect(() => {
+		if (user) return setRoute("/");
+	}, [user]);
 
 	return (
 		<div className="centered">

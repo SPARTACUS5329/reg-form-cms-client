@@ -34,7 +34,6 @@ function Row({
 			Validation["NONE"],
 			false
 		);
-		console.log(row.rowID);
 		setCurrentForm((steps) =>
 			steps.map((step) =>
 				step.map((curr) =>

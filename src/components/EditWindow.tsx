@@ -69,7 +69,6 @@ function EditWindow() {
 								onChange={(value: ElementType) => {
 									setCurrentElementType(value);
 								}}
-								defaultValue={currentElementType}
 								placeholder="Input Type"
 								options={elements}
 							/>
@@ -100,11 +99,7 @@ function EditWindow() {
 				<AntRow className="even-spaced">
 					<AntCol span={8}>
 						<AntForm.Item name="validation">
-							<Select
-								placeholder="Validation"
-								options={validators}
-								defaultValue={Validation["NONE"]}
-							/>
+							<Select placeholder="Validation" options={validators} />
 						</AntForm.Item>
 					</AntCol>
 					<AntCol span={8}>
